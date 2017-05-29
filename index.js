@@ -120,4 +120,4 @@ class Aperture {
   }
 }
 
-module.exports = () => new Aperture();
+module.exports = (aperturePath) => new Aperture(aperturePath);
