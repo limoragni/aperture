@@ -8,8 +8,13 @@ const macosVersion = require('macos-version');
 const debuglog = util.debuglog('aperture');
 
 class Aperture {
-  constructor() {
+  constructor(aperturePath) {
     macosVersion.assertGreaterThanOrEqualTo('10.10');
+    if (aperturePath){
+      this.aperturePath = aperturePath;
+    } else {
+      this.aperturePath = path.join(__dirname, 'swift', 'main')
+    }
   }
 
   getAudioSources() {
@@ -64,7 +69,7 @@ class Aperture {
         audioSourceId
       ];
 
-      this.recorder = execa(path.join(__dirname, 'swift', 'main'), recorderOpts);
+      this.recorder = execa(this.aperturePath, recorderOpts);
 
       const timeout = setTimeout(() => {
         // `.stopRecording()` was called already
